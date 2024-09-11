@@ -2,27 +2,38 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react'; // Utilisez NextAuth.js pour la connexion
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your login logic here
-    // Example: Check credentials, set tokens, redirect
+    setLoading(true);
+
     try {
-      // Dummy logic for illustration
-      if (email === 'test@example.com' && password === 'password') {
-        // Redirect to dashboard or other page
+      // Appel à NextAuth.js pour la connexion
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result?.error) {
+        setError(result.error);
+      } else if (result?.ok) {
         router.push('/dashboard');
       } else {
-        setError('Invalid email or password');
+        setError('An unknown error occurred');
       }
-    } catch (err) {
+    } catch (error) {
       setError('An error occurred during login');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -31,6 +42,7 @@ const Login = () => {
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
+        {loading && <p>Loading...</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>

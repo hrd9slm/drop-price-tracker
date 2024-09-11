@@ -1,26 +1,30 @@
 "use client";
+
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import NavLink from './NavLink';
-import { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
+
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-    const { data: session, status } = useSession();
   };
 
   return (
-   <header className="flex shadow-lg py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50">
+    <header className="flex shadow-lg py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50">
       <div className="flex flex-wrap items-center justify-between gap-4 w-full">
-        <NavLink label={
-          <img
-            alt="logo"
-            className="w-36"
-          />
-        } href="/" />
+        <NavLink
+          label={
+            <img
+              alt="logo"
+              className="w-36"
+            />
+          }
+          href="/"
+        />
         <div
           id="collapseMenu"
           className={`lg:block lg:w-auto lg:relative lg:bg-transparent ${
@@ -49,15 +53,18 @@ const Header = () => {
           </button>
           <ul className="lg:flex lg:gap-x-5 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
             <li className="mb-6 hidden max-lg:block">
-              <NavLink label={
-                <img
-                  alt="logo"
-                  className="w-36"
-                />
-              } href="/" />
+              <NavLink
+                label={
+                  <img
+                    alt="logo"
+                    className="w-36"
+                  />
+                }
+                href="/"
+              />
             </li>
             <li className="max-lg:border-b max-lg:py-3 px-3">
-              <NavLink label="Home" href="/"  />
+              <NavLink label="Home" href="/" />
             </li>
             <li className="max-lg:border-b max-lg:py-3 px-3">
               <NavLink label="About" href="/about" />
@@ -65,40 +72,41 @@ const Header = () => {
             <li className="max-lg:border-b max-lg:py-3 px-3">
               <NavLink label="Feature" href="/feature" />
             </li>
-            {/* {session && (
+            {session && (
               <li className="max-lg:border-b max-lg:py-3 px-3">
                 <NavLink label="Dashboard" href="/dashboard" />
               </li>
-            )} */}
+            )}
           </ul>
         </div>
 
         <div className="flex items-center ml-auto space-x-5">
-          {/* {session ? (
+          {session ? (
             <>
-              <NavLink label="Dashboard" href="/dashboard" />
-              <button onClick={() => signOut()} className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg shadow-lg hover:bg-gray-400 transition duration-300">
+             
+              <button
+                onClick={() => signOut()}
+                className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg shadow-lg hover:bg-gray-400 transition duration-300"
+              >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link href="/register" className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">
+              <Link
+                href="/register"
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition duration-300"
+              >
                 SignUp
               </Link>
-              <Link href="/login" className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg shadow-lg hover:bg-gray-400 transition duration-300">
+              <Link
+                href="/login"
+                className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg shadow-lg hover:bg-gray-400 transition duration-300"
+              >
                 Login
               </Link>
             </>
-          )} */}
-           <>
-              <Link href="/register" className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">
-                SignUp
-              </Link>
-              <Link href="/login" className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg shadow-lg hover:bg-gray-400 transition duration-300">
-                Login
-              </Link>
-            </>
+          )}
           <button id="toggleOpen" className="lg:hidden">
             <svg
               className="w-7 h-7"

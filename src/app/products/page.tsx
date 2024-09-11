@@ -26,27 +26,30 @@
 
 
 // src/app/AddProductPage.tsx
-import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
 
-export default async function AddProductPage() {
-  const addProduct = async (productData: { name: string; currentPrice: number; url: string }) => {
-    try {
-      const newProduct = await prisma.product.create({
-        data: productData,
-      });
-      console.log('Product added:', newProduct);
-    } catch (error) {
-      console.error('Error adding product:', error);
-    }
-  };
 
-  await addProduct({ name: 'Example Product', currentPrice: 99.99, url: 'http://example.com' });
+// import { PrismaClient } from '@prisma/client';
 
-  return (
-    <div>
-      <h1>Product Added</h1>
-    </div>
-  );
-}
+// const prisma = new PrismaClient();
+
+// export default async function AddProductPage() {
+//   const addProduct = async (productData: { name: string; currentPrice: number; url: string }) => {
+//     try {
+//       const newProduct = await prisma.product.create({
+//         data: productData,
+//       });
+//       console.log('Product added:', newProduct);
+//     } catch (error) {
+//       console.error('Error adding product:', error);
+//     }
+//   };
+
+//   await addProduct({ name: 'Example Product', currentPrice: 99.99, url: 'http://example.com' });
+
+//   return (
+//     <div>
+//       <h1>Product Added</h1>
+//     </div>
+//   );
+// }

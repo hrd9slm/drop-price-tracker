@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { registerUser } from './RegisterServer'; 
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -12,20 +13,15 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your registration logic here
-    // Example: Register user, redirect to login page
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
+
     try {
-      // Dummy logic for illustration
-      if (email && password) {
-        // Redirect to login or other page
-        router.push('/login');
-      } else {
-        setError('Please fill out all fields');
-      }
+      // Call the server function to register the user
+      await registerUser(email, password);
+      router.push('/login');
     } catch (err) {
       setError('An error occurred during registration');
     }
